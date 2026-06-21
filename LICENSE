@@ -1,16 +1,22 @@
-MIT License
-
+CUSTOM SOURCE-AVAILABLE LICENSE (UPSTREAM-FIRST)
 Copyright (c) 2026 Hermetic Code
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+of this software and associated documentation files (the "Software"), to use, 
+run, and fork the Software for personal or internal use without restriction.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+MODIFICATION AND DISTRIBUTION RESTRICTIONS:
+1. Public distribution of modified versions of this Software is strictly prohibited 
+   unless the modifications are first submitted to the official upstream repository 
+   (the original repository maintained by the Copyright Holder) via a Pull Request (PR).
+
+2. If a submitted Pull Request is reviewed and explicitly rejected by the upstream 
+   maintainer(s), the contributor is then granted a limited exception to apply and 
+   distribute those specific rejected modifications within their own public fork.
+
+3. Any public fork distributing modifications under the Section 2 exception must 
+   prominently display a notice stating: "This fork contains modifications that 
+   were submitted to and rejected by the upstream project."
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
