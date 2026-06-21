@@ -13,7 +13,9 @@
         "LICENSE"
     ],
     "keywords": [
-        "cli"
+        "cli",
+        "package manager",
+        "linux"
     ],
     "engines": {
         "node": ">=18"
