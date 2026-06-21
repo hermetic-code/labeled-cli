@@ -1,0 +1,21 @@
+{
+    "name": "labeled-cli",
+    "version": "1.0.0",
+    "description": "CLI utility for ...",
+    "author": "Joyal George K J",
+    "license": "MIT",
+    "bin": {
+        "labeled": "./labeled"
+    },
+    "files": [
+        "labeled",
+        "README.md",
+        "LICENSE"
+    ],
+    "keywords": [
+        "cli"
+    ],
+    "engines": {
+        "node": ">=18"
+    }
+}

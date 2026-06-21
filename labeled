@@ -1,0 +1,218 @@
+#!/usr/bin/env node
+
+const { execSync } = require("child_process");
+const fs = require("fs");
+const path = require("path");
+
+const SCRIPT_NAME = "labeled";
+
+// Quick helper to check if dnf5 is the current system binary
+const isDnf5 = () => {
+    try {
+        execSync("which dnf5", { stdio: "ignore" });
+        return true;
+    } catch (e) {
+        return false;
+    }
+};
+
+// Your unified package manager commands strategy map
+const COMMANDS = {
+    apt: {
+        install: (pkgs) => `sudo apt install -y ${pkgs}`,
+        mark: (pkgs) => `sudo apt-mark auto ${pkgs}`,
+        remove: () => `sudo apt autoremove -y`,
+    },
+    dnf: {
+        install: (pkgs) => `sudo dnf install -y ${pkgs}`,
+        mark: (pkgs) =>
+            isDnf5()
+                ? `sudo dnf5 mark dependency ${pkgs}`
+                : `sudo dnf mark remove ${pkgs}`,
+        remove: () =>
+            isDnf5() ? `sudo dnf5 autoremove -y` : `sudo dnf autoremove -y`,
+    },
+    pacman: {
+        install: (pkgs) => `sudo pacman -S --noconfirm ${pkgs}`,
+        mark: (pkgs) => `sudo pacman -D --asdeps ${pkgs}`,
+        remove: () => `sudo pacman -Rns \$(pacman -Qdtq) --noconfirm`,
+    },
+};
+
+// Path configurations
+const CONFIG_DIR = path.join(process.env.HOME, ".local", "config", SCRIPT_NAME);
+const JSON_PATH = path.join(CONFIG_DIR, "tracking.json");
+
+// Ensure directory and JSON file exist
+function loadData() {
+    if (!fs.existsSync(CONFIG_DIR)) {
+        fs.mkdirSync(CONFIG_DIR, { recursive: true });
+    }
+    if (!fs.existsSync(JSON_PATH)) {
+        return {};
+    }
+    try {
+        const raw = fs.readFileSync(JSON_PATH, "utf8");
+        return JSON.parse(raw || "{}");
+    } catch (e) {
+        console.warn("⚠️ Warning: JSON file corrupted. Starting fresh.");
+        return {};
+    }
+}
+
+function saveData(data) {
+    fs.writeFileSync(JSON_PATH, JSON.stringify(data, null, 4));
+}
+
+// Automatically detect system package manager
+function getPkgManager() {
+    for (const manager of Object.keys(COMMANDS)) {
+        try {
+            execSync(`which ${manager}`, { stdio: "ignore" });
+            return manager;
+        } catch (e) {}
+    }
+
+    console.error(
+        `❌ Error: Supported package manager ${Object.keys(COMMANDS).join(" ")} not found.`,
+    );
+    process.exit(1);
+}
+
+function handleInstall(label, pkgs) {
+    const mgr = getPkgManager();
+    console.log(`📦 Using ${mgr} to install packages for label: '${label}'...`);
+
+    let cmd = COMMANDS[mgr].install(pkgs.join(" "));
+
+    try {
+        // Run the install command and pipe output directly to the terminal
+        execSync(cmd, { stdio: "inherit" });
+
+        // Save metadata on success
+        const data = loadData();
+        if (!data[label]) {
+            data[label] = { [mgr]: { packages: [] } };
+        }
+
+        // Merge package arrays cleanly (no duplicates)
+        data[label][mgr].packages = [
+            ...new Set([...data[label][mgr].packages, ...pkgs]),
+        ];
+        data[label][mgr].timestamp = new Date()
+            .toISOString()
+            .replace("T", " ")
+            .substring(0, 19);
+
+        saveData(data);
+        console.log(
+            `\n✅ Successfully installed and labeled packages under '${label}'`,
+        );
+    } catch (error) {
+        console.error("\n❌ Installation failed. Tracking aborted.");
+        process.exit(1);
+    }
+}
+
+function handleRemove(label) {
+    const data = loadData();
+    if (!data[label]) {
+        console.error(
+            `❌ Error: Label '${label}' not found in tracking history.`,
+        );
+        process.exit(1);
+    }
+
+    let markCmd = "";
+    let cleanCmd = "";
+
+    for (const manager of Object.keys(data[label])) {
+        const pkgs = data[label][manager].packages;
+        console.log(
+            `扫 Processing removal for label '${label}' (${pkgs.length} packages) from ${manager}...`,
+        );
+
+        markCmd += COMMANDS[manager].mark(pkgs.join(" ")) + ";";
+        cleanCmd += COMMANDS[manager].remove(pkgs.join(" ")) + ";";
+    }
+
+    try {
+        console.log(`🔄 Setting package states to auto-dependency...`);
+        execSync(markCmd, { stdio: "inherit" });
+
+        console.log(`🧼 Sweeping away unused packages...`);
+        execSync(cleanCmd, { stdio: "inherit" });
+
+        // Remove label from tracking
+        delete data[label];
+        saveData(data);
+        console.log(
+            `🗑️ Finished! Cleaned up system and deleted label '${label}' from logs.`,
+        );
+    } catch (e) {
+        console.error("❌ An error occurred during the cleanup process.");
+    }
+}
+
+function handleList() {
+    const data = loadData();
+    if (Object.keys(data).length === 0) {
+        console.log("📂 No tracked labels found.");
+        return;
+    }
+    console.log(
+        `${"LABEL".padEnd(20)} ${"MANAGER".padEnd(10)} ${"DATE".padEnd(20)} PACKAGES`,
+    );
+    console.log("-".repeat(70));
+    for (const [label, info] of Object.entries(data)) {
+        for (const manager of Object.keys(info)) {
+            console.log(
+                `${label.padEnd(20)} ${manager.padEnd(10)} ${info[manager].timestamp.padEnd(20)} ${info[manager].packages.join(", ")}`,
+            );
+        }
+    }
+}
+
+// Minimalist Argument Parsing
+const args = process.argv.slice(2);
+const command = args[0];
+
+if (command === "install") {
+    const labelIndex = args.indexOf("--label");
+    if (labelIndex === -1 || !args[labelIndex + 1]) {
+        console.error("❌ Error: Missing --label <label_name>");
+        process.exit(1);
+    }
+    const label = args[labelIndex + 1];
+
+    // Gather all package names ignoring the 'install' and '--label <name>' arguments
+    const pkgs = args
+        .slice(1)
+        .filter(
+            (arg, i) => arg !== "--label" && arg !== label && i !== labelIndex,
+        );
+
+    if (pkgs.length === 0) {
+        console.error("❌ Error: No packages specified for installation.");
+        process.exit(1);
+    }
+    handleInstall(label, pkgs);
+} else if (command === "remove") {
+    const label = args[1];
+    if (!label) {
+        console.error(
+            `❌ Error: Missing label name. Usage: ${SCRIPT_NAME} remove <label>`,
+        );
+        process.exit(1);
+    }
+    handleRemove(label);
+} else if (command === "list") {
+    handleList();
+} else {
+    console.log(`
+Usage:
+  ${SCRIPT_NAME} install --label <name> <pkg1> <pkg2> ...
+  ${SCRIPT_NAME} remove <name>
+  ${SCRIPT_NAME} list
+    `);
+}
