@@ -43,7 +43,28 @@ const COMMANDS = {
 const CONFIG_DIR = path.join(process.env.HOME, ".local", "config", SCRIPT_NAME);
 const JSON_PATH = path.join(CONFIG_DIR, "tracking.json");
 
-// Ensure directory and JSON file exist
+/**
+ * Used to create github issue link
+ * @param {string} type
+ * @param {string} title 
+ * @param {string} body 
+ * @returns {string}
+ */
+function submitIssue(type, title, body) {
+    return (
+        encodeURI(
+            `http://github.com/hermetic-code/labeled-cli/issues/new?title=[${type.toUpperCase()}]: `,
+        ) +
+        encodeURIComponent(title.toUpperCase()) +
+        "&body=" +
+        encodeURIComponent(body)
+    );
+}
+
+/**
+ * Ensure directory and JSON file exist
+ * @returns {object}
+ */
 function loadData() {
     if (!fs.existsSync(CONFIG_DIR)) {
         fs.mkdirSync(CONFIG_DIR, { recursive: true });
@@ -74,7 +95,7 @@ function getPkgManager() {
     }
 
     console.error(
-        `❌ Error: Supported package manager ${Object.keys(COMMANDS).join(" ")} not found.`,
+        `❌ Error: Package manager not found.\n\nREPORT ISSUE: ${submitIssue("error", "Package Manager Not Found", "I use this distro [Insert your distro name here.]\n<!-- Use this command to find distro: [source /etc/os-release && echo $NAME $VERSION] -->")}`,
     );
     process.exit(1);
 }
@@ -118,7 +139,7 @@ function handleRemove(label) {
     const data = loadData();
     if (!data[label]) {
         console.error(
-            `❌ Error: Label '${label}' not found in tracking history.`,
+            `❌ Error: Label '${label}' not found in tracking history.\nUse command '${SCRIPT_NAME} list' to verify the label name!`,
         );
         process.exit(1);
     }
@@ -151,6 +172,13 @@ function handleRemove(label) {
         );
     } catch (e) {
         console.error("❌ An error occurred during the cleanup process.");
+        console.error(
+            submitIssue(
+                "error",
+                "Cleanup Error",
+                `Command Used for removing ${label} packages.\nUse Command [${SCRIPT_NAME} list]\ncopy paste the output where label name appears`,
+            ),
+        );
     }
 }
 
@@ -201,7 +229,7 @@ if (command === "install") {
     const label = args[1];
     if (!label) {
         console.error(
-            `❌ Error: Missing label name. Usage: ${SCRIPT_NAME} remove <label>`,
+            `❌ Error: Missing label name. Usage: '${SCRIPT_NAME} remove <label>'`,
         );
         process.exit(1);
     }
@@ -213,6 +241,5 @@ if (command === "install") {
 Usage:
   ${SCRIPT_NAME} install --label <name> <pkg1> <pkg2> ...
   ${SCRIPT_NAME} remove <name>
-  ${SCRIPT_NAME} list
-    `);
+  ${SCRIPT_NAME} list`);
 }
