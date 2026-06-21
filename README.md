@@ -6,9 +6,7 @@
 </p>
 
 <p align="center">
-A cross-distro package tracking wrapper for Linux. <br>
-`labeled` lets you group package installations under a custom label and safely remove them later using your system's native package manager. <br>
-Instead of manually remembering every package you installed during troubleshooting, testing, or development, you can track them as a temporary session and clean them up in one command.
+<i>labeled</i> lets you group package installations under a custom label and safely remove them later using your system's native package manager. Instead of manually remembering every package you installed during troubleshooting, testing, or development, you can track them as a temporary session and clean them up in one command.
 </p>
 
 <p align="center">
