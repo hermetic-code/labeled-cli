@@ -3,7 +3,9 @@ name: Publish to NPM
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
+
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -14,11 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-    
+
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-          package-manager-cache: false
-    
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. Compile the TS source into the optimized executable bundle
+      - name: Build Executable
+        run: npm run build
+
       - run: npm publish --provenance
