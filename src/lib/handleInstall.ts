@@ -4,13 +4,16 @@ import section from "../utils/section";
 import getData from "../utils/getData";
 import setData from "../utils/saveData";
 import { PACKAGE_MANGERS } from "../managers";
+import { logger } from "../utils/logger";
+import getIssueLink from "../utils/getIssueLink";
 
 export default function handleInstall(label: string, pkgs: string[]) {
     const mgr = getManager();
     section("Install Session");
-    console.log(
-        `Label\t: ${label}\nManager\t: ${mgr}\nPackages: ${pkgs.join(" ")}\n`,
-    );
+
+    logger.info("Target Label", label);
+    logger.info("Active Manager", mgr);
+    logger.info("Packages", pkgs.join(", "));
 
     let cmd = PACKAGE_MANGERS[mgr].install(pkgs.join(" "));
 
@@ -37,10 +40,23 @@ export default function handleInstall(label: string, pkgs: string[]) {
         setData(data);
 
         section("Session Complete");
-        console.log(`Tracked ${pkgs.length} packages under label "${label}"`);
+        logger.success(
+            `Transaction complete`,
+            `Tracked ${pkgs.length} packages under label "${label}"`,
+        );
     } catch (error) {
         section("Installation Failed");
-        console.error("Tracking aborted.");
+        logger.error("Downstream execution aborted", error);
+
+        // Construct and output an automated, clean bug report link for the user
+        const contextPayload = `Manager: ${mgr}\nCommand: ${cmd}\nError Context: ${error instanceof Error ? error.message : String(error)}`;
+        const bugReport = getIssueLink(
+            "bug",
+            `Installation tracking failure under ${mgr}`,
+            contextPayload,
+        );
+
+        console.log(`  ${bugReport}\n`);
         process.exit(1);
     }
 }

@@ -23,7 +23,6 @@ switch (true) {
             showHelper();
             break;
         } else {
-            console.log(args.slice(1));
             for (const label of args.slice(1)) {
                 handleRemove(label);
             }
