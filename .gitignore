@@ -11,3 +11,6 @@ tracking.json
 # Log files
 *.log
 npm-debug.log*
+
+# Build fragments
+/sea-config.json
