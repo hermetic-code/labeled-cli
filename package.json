@@ -1,35 +1,51 @@
 {
     "name": "labeled-cli",
-    "version": "1.0.3",
-    "description": "CLI utility for ...",
+    "version": "0.1.0",
+    "description": "A transactional package manager wrapper to track, group, and cleanly purge temporary Linux installations without leaving orphan dependencies behind.",
     "author": "Joyal George K J",
-    "license": "MIT",
+    "license": "SEE LICENSE IN LICENSE",
     "bin": {
-        "labeled": "labeled"
+        "labeled": "dist/labeled"
+    },
+    "scripts": {
+        "build": "node build.js",
+        "prepublishOnly": "npm run build"
     },
     "files": [
-        "labeled",
+        "dist/labeled",
         "README.md",
         "LICENSE"
     ],
     "keywords": [
+        "linux",
         "cli",
-        "package manager",
-        "linux"
+        "apt",
+        "dnf",
+        "dnf5",
+        "pacman",
+        "package-manager",
+        "wrapper",
+        "cleanup",
+        "autoremove",
+        "sysadmin",
+        "devops",
+        "tools"
     ],
     "engines": {
         "node": ">=18"
     },
     "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/hermetic-code/labeled-cli.git"
     },
     "bugs": {
-        "url": "https://github.com/hermetic-code/labeled-cli/issues"
+        "url": "https://github.com/hermetic-code/labeled-cli/issues/new"
     },
-    "homepage": "https://github.com/hermetic-code/labeled-cli#readme"
+    "homepage": "https://github.com/hermetic-code/labeled-cli#readme",
+    "devDependencies": {
+        "@types/node": "^20.19.43",
+        "esbuild": "^0.28.1",
+        "typescript": "^5.0.0"
+    }
 }

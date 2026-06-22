@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+
+# Optional: Ignore the compiled distribution folder on Git
+# Remove this rule if you explicitly want users to clone the compiled binary directly from GitHub
+dist/
+
+# Local configuration data storage file
+tracking.json
+
+# Log files
+*.log
+npm-debug.log*
