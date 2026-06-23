@@ -1,5 +1,6 @@
 import { execSync } from "node:child_process";
 import { PackageManagerStrategy } from "../type";
+import { isSudo } from "../utils/isSudo";
 
 const isDnf5 = (): boolean => {
     try {
@@ -11,7 +12,11 @@ const isDnf5 = (): boolean => {
 };
 
 export const dnf: PackageManagerStrategy = {
-    install: (pkgs) => `sudo dnf install ${pkgs}`,
-    mark: (pkgs) => isDnf5() ? `sudo dnf5 mark dependency --skip-unavailable ${pkgs}` : `sudo dnf mark remove --skip-unavailable ${pkgs}`,
-    remove: () => isDnf5() ? `sudo dnf5 autoremove` : `sudo dnf autoremove`
+    install: (pkgs) => `${isSudo}dnf install ${pkgs}`,
+    mark: (pkgs) =>
+        isDnf5()
+            ? `${isSudo}dnf5 mark dependency --skip-unavailable ${pkgs}`
+            : `${isSudo}dnf mark remove --skip-unavailable ${pkgs}`,
+    remove: () =>
+        isDnf5() ? `${isSudo}dnf5 autoremove` : `${isSudo}dnf autoremove`,
 };

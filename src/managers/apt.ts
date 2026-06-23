@@ -1,7 +1,8 @@
 import { PackageManagerStrategy } from "../type";
+import { isSudo } from "../utils/isSudo";
 
 export const apt: PackageManagerStrategy = {
-    install: (pkgs) => `sudo apt install ${pkgs}`,
-    mark: (pkgs) => `sudo apt-mark auto ${pkgs}`,
-    remove: () => `sudo apt autoremove`,
+    install: (pkgs) => `${isSudo}apt install ${pkgs}`,
+    mark: (pkgs) => `${isSudo}apt-mark auto ${pkgs}`,
+    remove: () => `${isSudo}apt autoremove`,
 };
