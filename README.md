@@ -39,36 +39,15 @@ Over time, temporary experiments become permanent system clutter.
 
 ---
 
-## Quick Example
+## Quick Start
 
-Install packages under a label:
+See `labeled` in action as it bundles packages under a clean tracking session,
+monitors the environment, and safely offloads them when no longer needed:
 
-```bash
-labeled install [label_name] <packages>
-```
+![labeled CLI Demo](./assets/demo.gif)
 
-View tracked sessions:
-
-```bash
-labeled list
-```
-
-Output:
-
-```text
-LABEL         MANAGER   DATE                  PACKAGES
-------------------------------------------------------
-audio-fix     apt       2026-06-21 18:30:12   alsa-utils, pavucontrol
-```
-
-Remove the session:
-
-```bash
-labeled remove audio-fix
-```
-
-`labeled` safely returns those packages to automatic dependency status and lets
-your package manager remove anything that is no longer needed.
+_Can't use the interactive demo? Jump straight to the [Usage Reference](#usage)
+below._
 
 ---
 
@@ -87,87 +66,66 @@ labeled --help
 ```
 
 ---
+
 ## Common Use Cases
 
-### Troubleshooting Sessions
+- **Troubleshooting Sessions** — Test potential fixes from forum threads or
+  issue trackers safely. If it doesn't work, wipe it out completely.
 
-Testing multiple fixes from forum posts, documentation, or issue trackers:
+    ```bash
+    labeled install wifi-fix wireless-tools firmware-iwlwifi
+    labeled remove wifi-fix
+    ```
 
-```bash
-labeled install wifi-fix wireless-tools firmware-iwlwifi
-```
+- **Temporary Build Tools** — Pull down heavy compilers or development assets
+  (`gcc`, `cmake`) just long enough to compile a project from source, then
+  instantly free up your disk space.
 
-If the fix fails:
+    ```bash
+    labeled install build-env gcc make cmake automake
+    labeled remove build-env
+    ```
 
-```bash
-labeled remove wifi-fix
-```
-
-### Temporary Build Dependencies
-
-Installing compilers and development tools only for a single build:
-
-```bash
-labeled install build-env gcc make cmake automake
-```
-
-After the build completes:
-
-```bash
-labeled remove build-env
-```
-
-### Dependency Experiments
-
-Trying alternative libraries or runtimes without permanently modifying your
-system.
-
-```bash
-labeled install node-test nodejs npm
-```
-
-Remove everything when you're done:
-
-```bash
-labeled remove node-test
-```
+- **Dependency Experiments** — Audit alternative runtimes or evaluate libraries
+  locally without permanently cluttering your baseline system environment.
+    ```bash
+    labeled install node-test nodejs npm
+    labeled remove node-test
+    ```
 
 ---
-## Commands
+<span id="usage"><span>
+## Commands & Usage
 
-### Install
+```text
+USAGE:
+  labeled <command> [options]
 
-```bash
-labeled install [label_name] <packages>
+COMMANDS:
+  install <label> <pkgs...>    Install packages and index them under a label
+  remove  <label>              Purge system packages associated with a label
+  list                         Display all active labeled environments
+
+ARGUMENTS:
+  <label>    The target tracking identifier group
+  <pkgs...>  Space-separated list of distro system packages
 ```
 
-Example:
+### Quick Examples
 
 ```bash
+# Group and track a set of packages
 labeled install audio-fix alsa-utils pavucontrol
-```
 
-### List
-
-```bash
+# See your active tracking sessions
 labeled list
-```
 
-Displays all tracked sessions.
-
-### Remove
-
-```bash
-labeled remove <label>
-```
-
-Example:
-
-```bash
+# Safely purge the label and unneeded dependencies
 labeled remove audio-fix
 ```
 
 ---
+
 ## How It Works
 
 `labeled` acts as a thin wrapper around your system package manager.
@@ -189,6 +147,7 @@ This approach minimizes the risk of accidentally removing packages still needed
 elsewhere on the system.
 
 ---
+
 ## Supported Package Managers
 
 | Package Manager | Distribution                         |
@@ -200,6 +159,7 @@ elsewhere on the system.
 Package manager detection is automatic.
 
 ---
+
 ## Requirements
 
 - Node.js 18 or newer
@@ -207,6 +167,14 @@ Package manager detection is automatic.
 - A supported package manager
 
 ---
+
+## Contributing
+
+We welcome community contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to learn how to set up your local development environment, follow our coding standards, and submit pull requests.
+
+---
+
 ## License
 
-MIT License.
+Custom License. See the [LICENSE](LICENSE) file for the full terms and usage
+conditions.
