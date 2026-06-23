@@ -44,7 +44,7 @@ Over time, temporary experiments become permanent system clutter.
 Install packages under a label:
 
 ```bash
-labeled install --label [label_name] <packages>
+labeled install [label_name] <packages>
 ```
 
 View tracked sessions:
@@ -94,7 +94,7 @@ labeled --help
 Testing multiple fixes from forum posts, documentation, or issue trackers:
 
 ```bash
-labeled install --label wifi-fix wireless-tools firmware-iwlwifi
+labeled install wifi-fix wireless-tools firmware-iwlwifi
 ```
 
 If the fix fails:
@@ -108,7 +108,7 @@ labeled remove wifi-fix
 Installing compilers and development tools only for a single build:
 
 ```bash
-labeled install --label build-env gcc make cmake automake
+labeled install build-env gcc make cmake automake
 ```
 
 After the build completes:
@@ -123,7 +123,7 @@ Trying alternative libraries or runtimes without permanently modifying your
 system.
 
 ```bash
-labeled install --label node-test nodejs npm
+labeled install node-test nodejs npm
 ```
 
 Remove everything when you're done:
@@ -138,13 +138,13 @@ labeled remove node-test
 ### Install
 
 ```bash
-labeled install --label [label_name] <packages>
+labeled install [label_name] <packages>
 ```
 
 Example:
 
 ```bash
-labeled install --label audio-fix alsa-utils pavucontrol
+labeled install audio-fix alsa-utils pavucontrol
 ```
 
 ### List
