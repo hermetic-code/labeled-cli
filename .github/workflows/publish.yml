@@ -41,5 +41,12 @@ jobs:
           name: Release ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'Manual Development Build' }}
           draft: false
           prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
+          generate_release_notes: true # Automatically generates a detailed list of pull requests and commits
+          body: |
+            ### 📦 Distribution Flavors Included:
+            - **`labeled`**: Lightweight plain text shebang script (~4KB). Requires an existing Node.js environment on the host machine.
+            - **`labeled-linux-x64`**: Self-contained production binary (~140MB). Zero dependencies required. Runs natively out of the box.
+
+            _Automated deployment pipeline compilation verified using Node.js v26 runtime engine sandbox._
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
