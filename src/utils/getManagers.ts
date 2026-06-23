@@ -6,7 +6,7 @@ import { logger } from "./logger";
 export default function getManager() {
     for (const manager of Object.keys(PACKAGE_MANGERS)) {
         try {
-            execSync(`which ${manager}`, { stdio: "ignore" });
+            execSync(`command -v ${manager}`, { stdio: "ignore" });
             return manager;
         } catch (e) {}
     }
