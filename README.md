@@ -9,7 +9,19 @@
 <i>labeled</i> lets you group package installations under a custom label and safely remove them later using your system's native package manager. Instead of manually remembering every package you installed during troubleshooting, testing, or development, you can track them as a temporary session and clean them up in one command.
 </p>
 
-<p align="center">
+<p align="center" >
+  <img src="https://img.shields.io/badge/npm-labeled--cli-cb3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm package name" />
+  <img src="https://img.shields.io/badge/version-v0.1.1-blue?style=for-the-badge" alt="Current Version" />
+<br>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/Node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Fedora-51A2DA?style=for-the-badge&logo=fedora&logoColor=white" alt="Fedora" />
+  <img src="https://img.shields.io/badge/Arch_Linux-33AADD?style=for-the-badge&logo=arch-linux&logoColor=white" alt="Arch Linux" />
+  <img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white" alt="Ubuntu" />
+<br>
+  <img src="https://img.shields.io/badge/APT-supported-E95420?style=flat-square&logo=ubuntu&logoColor=white" alt="APT Supported" />
+  <img src="https://img.shields.io/badge/Pacman-supported-33AADD?style=flat-square&logo=arch-linux&logoColor=white" alt="Pacman Supported" />
+  <img src="https://img.shields.io/badge/DNF%20/%20DNF5-supported-51A2DA?style=flat-square&logo=fedora&logoColor=white" alt="DNF Supported" />
 </p>
 
 ---
@@ -94,7 +106,9 @@ labeled --help
     ```
 
 ---
+
 <span id="usage"><span>
+
 ## Commands & Usage
 
 ```text
@@ -170,7 +184,9 @@ Package manager detection is automatic.
 
 ## Contributing
 
-We welcome community contributions! Please read our [Contributing Guide](CONTRIBUTING.md) to learn how to set up your local development environment, follow our coding standards, and submit pull requests.
+We welcome community contributions! Please read our
+[Contributing Guide](CONTRIBUTING.md) to learn how to set up your local
+development environment, follow our coding standards, and submit pull requests.
 
 ---
 
