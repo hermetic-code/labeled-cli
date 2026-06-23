@@ -1,7 +1,12 @@
-import { PackageManagerStrategy } from "../type"
+import { PackageManagerStrategy } from "../type";
+import { isSudo } from "../utils/isSudo";
 
 export const pacman: PackageManagerStrategy = {
-        install: (pkgs) => `sudo pacman -S --noconfirm ${pkgs}`,
-        mark: (pkgs) => `sudo pacman -D --asdeps ${pkgs}`,
-        remove: () => `sudo pacman -Rns \$(pacman -Qdtq) --noconfirm`,
-    }
+    install: (pkgs) => `${isSudo}pacman -S --needed --asdeps ${pkgs}`,
+    mark: (pkgs) => {
+        return `${isSudo}sh -c 'for pkg in ${pkgs}; do pacman -Qq "$pkg" >/dev/null 2>&1 && pacman -D --asdeps "$pkg"; done || true'`;
+    },
+    remove: () => {
+        return `${isSudo}sh -c 'orphans=$(pacman -Qdtq); if [ -n "$orphans" ]; then pacman -Rns $orphans; else echo "Nothing to do."; fi'`;
+    },
+};
