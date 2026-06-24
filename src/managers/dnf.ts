@@ -12,11 +12,13 @@ const isDnf5 = (): boolean => {
 };
 
 export const dnf: PackageManagerStrategy = {
-    install: (pkgs) => `${isSudo}dnf install ${pkgs}`,
+    install: (pkgs) => `${isSudo}dnf install -y ${pkgs}`,
     mark: (pkgs) =>
         isDnf5()
             ? `${isSudo}dnf5 mark dependency --skip-unavailable ${pkgs}`
             : `${isSudo}dnf mark remove --skip-unavailable ${pkgs}`,
     remove: () =>
         isDnf5() ? `${isSudo}dnf5 autoremove` : `${isSudo}dnf autoremove`,
+    checkInstalled: (pkg) => `${isSudo}dnf list --installed ${pkg}`,
+    checkUpdates: (pkg) => `${isSudo}dnf check-update ${pkg}`,
 };

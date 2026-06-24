@@ -8,7 +8,7 @@ import { PACKAGE_MANGERS } from "../managers";
 import { TrackingStorage } from "../type";
 import { logger } from "../utils/logger";
 
-export default function handleRemove(label: string) {
+export default function remove(label: string) {
     const data: TrackingStorage = getData();
     if (!data[label]) {
         section("Label Not Found");
@@ -26,7 +26,7 @@ export default function handleRemove(label: string) {
 
     section(`Processing Removal "${label}"`);
     for (const manager of Object.keys(data[label])) {
-        const pkgs = data[label][manager].packages;
+        const pkgs = data[label][manager].tracked;
         logger.info(
             `Queued Environment`,
             `${manager} (${pkgs.length} packages)`,
