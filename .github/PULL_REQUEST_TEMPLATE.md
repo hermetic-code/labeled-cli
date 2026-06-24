@@ -5,7 +5,7 @@ Before submitting this PR, check and confirm the following project requirements.
 - [ ] My PR title strictly follows the standard convention: `[PR_TYPE]: <Short description>` (e.g., [FEATURE]: add untrack route, [FIX]: resolve diagonal log spacing).
 - [ ] This PR introduces changes for exactly one single issue. Multi-issue PRs will be rejected.
 - [ ] I have thoroughly tested my changes locally on my package manager setup.
-- [ ] I have read and followed the repository Contribution Guidelines.
+- [ ] I have read and followed the repository [Contribution Guidelines](/CONTRIBUTING.md).
 
 ---
 
