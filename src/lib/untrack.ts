@@ -42,6 +42,7 @@ export default function untrack(label: string, pkgs: string[]) {
     const managerData = data[label][mgr];
     const trackedList: string[] = managerData.tracked || [];
     const skippedList: string[] = managerData.skipped || [];
+    const untrackedList: string[] = managerData.untracked || [];
 
     // Verification Step 3: Check if the package is in the active list
     const isTracked = trackedList.includes(targetPkg);
@@ -58,6 +59,8 @@ export default function untrack(label: string, pkgs: string[]) {
     } else if (isSkipped) {
         managerData.skipped = skippedList.filter((p) => p !== targetPkg);
     }
+    
+    managerData.untracked = [...untrackedList, ...pkgs];
 
     logger.success("Mutation Complete", `Removed "${targetPkg}" configuration linking metrics.`);
 
