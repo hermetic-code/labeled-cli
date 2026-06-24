@@ -54,6 +54,7 @@ export default async function install(label: string, pkgs: string[]) {
                 `Failed during processing of package "${pkg}"`,
                 error instanceof Error ? error.message : String(error),
             );
+            process.exit(1);
         }
     }
 

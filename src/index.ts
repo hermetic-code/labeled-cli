@@ -8,7 +8,6 @@ import showHelper from "./utils/showHelper";
 
 // Minimalist Argument Parsing
 const { command, label, packages, flags } = extractor(process.argv);
-const args = process.argv.slice(4);
 
 switch (true) {
     case ["install", "i"].includes(command):
@@ -20,12 +19,13 @@ switch (true) {
         }
         break;
     case ["remove", "uninstall", "u"].includes(command):
+        console.log(label);
         if (!label) {
             showHelper();
             break;
         } else {
-            for (const label of args) {
-                remove(label);
+            for (const name of [label, ...packages]) {
+                remove(name);
             }
         }
         break;

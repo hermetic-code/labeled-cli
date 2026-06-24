@@ -38,6 +38,7 @@ export default function list() {
             const managerData = labelInfo[manager];
             const trackedPkgs = managerData.tracked || [];
             const skippedPkgs = managerData.skipped || [];
+            const untrackedPkgs = managerData.untracked || [];
             const timestamp = managerData.timestamp || "UNKNOWN";
 
             // 1. Render Tracked Packages Row
@@ -68,6 +69,21 @@ export default function list() {
                         `${DIM}${skippedPkgs.join(", ")}${RESET}`,
                 );
                 isFirstRowForLabel = false;
+            }
+
+            // 1. Render Tracked Packages Row
+            if (untrackedPkgs.length > 0) {
+                const labelColumn = isFirstRowForLabel
+                    ? BOLD + label + RESET
+                    : "";
+                console.log(
+                    `${labelColumn.padEnd(isFirstRowForLabel ? 24 + BOLD.length + RESET.length : 24)} ` +
+                        `${(DIM + "↳ " + RESET + manager).padEnd(12 + DIM.length + RESET.length)} ` +
+                        `${DIM}${"[UNTRACKED]".padEnd(14)}${RESET} ` +
+                        `${timestamp.padEnd(20)} ` +
+                        `${untrackedPkgs.join(", ")}`,
+                );
+                isFirstRowForLabel = false; // Next rows for this label leave the column blank
             }
         }
 
