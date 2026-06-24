@@ -1,6 +1,6 @@
 {
     "name": "labeled-cli",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "A transactional package manager wrapper to track, group, and cleanly purge temporary Linux installations without leaving orphan dependencies behind.",
     "author": "Joyal George K J",
     "license": "SEE LICENSE IN LICENSE",
