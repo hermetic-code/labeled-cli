@@ -110,6 +110,7 @@ USAGE:
 
 COMMANDS:
   install <label> <pkgs...>    Install packages and index them under a label
+  untrack <label> <pkgs...>    Remove packages from tracking of labels
   remove  <label>              Purge system packages associated with a label
   list                         Display all active labeled environments
 
