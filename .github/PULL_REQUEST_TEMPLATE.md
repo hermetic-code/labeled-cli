@@ -10,7 +10,7 @@ Before submitting this PR, check and confirm the following project requirements.
 ---
 
 ### Related Issue Reference
-Fixes #
+closes #<!-- Add issue number here -->
 
 ### Detailed Description of Changes
 

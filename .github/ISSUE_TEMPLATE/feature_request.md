@@ -7,6 +7,7 @@ assignees: ''
 ---
 
 ## Contribution Checklist and Verification
+<!-- Use x between the brackets to check the check boxs. ITS MANDATORY -->
 - [ ] I have verified this request does not duplicate a pending request. (Exception: Issues submitted explicitly to expand support for adding new package managers).
 - [ ] My issue title strictly follows the format: `[FEATURE]: <short-description>`.
 - [ ] I understand that before writing code, I must be assigned to this issue via a repository comment.

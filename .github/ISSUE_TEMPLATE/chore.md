@@ -7,6 +7,7 @@ assignees: ''
 ---
 
 ## Contribution Checklist and Verification
+<!-- Use x between the brackets to check the check boxs. ITS MANDATORY -->
 - [ ] I have verified this task does not duplicate a pending maintenance issue.
 - [ ] My issue title strictly follows the format: `[CHORE]: <short-description>`.
 - [ ] I understand that I must not start working on this until a maintainer assigns it to me via a comment request.
