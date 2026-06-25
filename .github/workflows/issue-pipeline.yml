@@ -57,7 +57,7 @@ jobs:
             const commenter = context.payload.comment.user.login;
             
             // Define targeted keyword phrases trigger paths (e.g., "assign me", "claim issue")
-            const assignmentKeywords = ["assign me", "assign this to me", "i want to work on this", "claim issue"];
+            const assignmentKeywords = ["assign me", "claim issue"];
             const isMatch = assignmentKeywords.some(keyword => commentBody.includes(keyword));
 
             if (!isMatch) {
