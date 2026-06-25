@@ -20,7 +20,7 @@ jobs:
         with:
           script: |
             const title = context.payload.pull_request.title;
-            const titleRegex = /^\[(BUG|FEATURE|CHORE|DOCS|PERF)\]:\s.+$/;
+            const titleRegex = /^\[(BUG|FIX|FEATURE|CHORE|DOCS|PERF)\]:\s.+$/;
 
             if (!titleRegex.test(title)) {
               core.setFailed(`Validation Failed: Title "${title}" does not follow the '[PR_TYPE]: ' naming convention.`);
