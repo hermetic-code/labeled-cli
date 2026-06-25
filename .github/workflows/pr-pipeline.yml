@@ -1,0 +1,98 @@
+name: "PR Verification and Automation Pipeline"
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+  workflow_dispatch:
+
+jobs:
+  verify-and-enable-merge:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+      issues: read
+    steps:
+      # Step 1: Validate Title Formats
+      - name: Verify PR Title Format
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = context.payload.pull_request.title;
+            const titleRegex = /^\[(BUG|FEATURE|CHORE|DOCS|PERF)\]:\s.+$/;
+
+            if (!titleRegex.test(title)) {
+              core.setFailed(`Validation Failed: Title "${title}" does not follow the '[PR_TYPE]: ' naming convention.`);
+            }
+
+      # Step 2: Validate Description Length and Presence
+      - name: Verify PR Description Substance
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body;
+
+            if (!body || body.trim().length < 20) {
+              core.setFailed("Validation Failed: The PR description is missing or too brief (minimum 20 characters).");
+            }
+
+      # Step 3: Validate Checklist Completion
+      - name: Verify Checklist Completion
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+            const uncheckedRegex = /-\s*\[\s*\]/g;
+
+            if (uncheckedRegex.test(body)) {
+              core.setFailed("Validation Failed: All checklist items must be marked complete with an [x].");
+            }
+
+      # Step 4: Extract and Verify Issue Ownership Assignment
+      - name: Verify Issue Assignment Ownership
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            const prAuthor = pr.user.login;
+            const body = pr.body || "";
+
+            const closingKeywordsRegex = /(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/i;
+            const issueMatch = body.match(closingKeywordsRegex);
+
+            if (!issueMatch) {
+              core.setFailed("Validation Failed: PR description must contain a valid closing issue reference link (e.g., 'closes #12').");
+              return;
+            }
+
+            const linkedIssueNumber = parseInt(issueMatch[1], 10);
+            console.log(`Extracted closing reference link target: Issue #${linkedIssueNumber}`);
+
+            try {
+              const { data: issue } = await github.rest.issues.get({
+                owner,
+                repo,
+                issue_number: linkedIssueNumber,
+              });
+
+              const assignees = issue.assignees || [];
+              const isAssignedToAuthor = assignees.some(assignee => assignee.login === prAuthor);
+
+              if (!isAssignedToAuthor) {
+                core.setFailed(`Validation Failed: PR author '${prAuthor}' is not assigned to the linked issue #${linkedIssueNumber}.`);
+              } else {
+                console.log(`Success: PR author '${prAuthor}' matches the assignee record for issue #${linkedIssueNumber}.`);
+              }
+            } catch (error) {
+              core.setFailed(`Validation Failed: Could not resolve or access linked issue status. Error: ${error.message}`);
+            }
+
+      # Step 5: Arm Native GitHub Auto-Merge Engine
+      - name: Enable Native GitHub Auto-Merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          gh pr merge "$PR_URL" --auto --squash --delete-branch
