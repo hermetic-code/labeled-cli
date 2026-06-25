@@ -1,0 +1,7 @@
+# Automate review assignments by file path tracks
+
+# Assign global maintainers to every single PR by default
+* @joyalgeorgekj
+
+# Assign specific reviewers if changes occur inside workflows
+/.github/workflows/   @joyalgeorgekj
