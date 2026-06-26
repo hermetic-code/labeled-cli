@@ -3,7 +3,7 @@ import readline from 'readline';
 import getManager from '../utils/getManagers';
 import section from '../utils/section';
 import getData from '../utils/getData';
-import setData from '../utils/saveData';
+import setData from '../utils/setData';
 import { PACKAGE_MANGERS } from '../managers';
 import { logger } from '../utils/logger';
 import { TrackingStorage } from '../type';

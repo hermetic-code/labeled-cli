@@ -46,7 +46,7 @@ labeled/
 
 ### Component Guidelines
 1. **Adding Package Managers (`src/managers/`)**: Avoid creating deep `if-else` branching conditions inside the execution loop. If you are adding support for a new manager (like Snap or Flatpak), implement the common interface declared in `src/managers/index.ts` and drop your mapping strategy into its own class file.
-2. **State Mutation Safety (`src/utils/`)**: All mutations interacting with your target storage layers must use unified wrappers through `getData.ts` and `saveData.ts`. This protects the engine from runtime synchronization corruption.
+2. **State Mutation Safety (`src/utils/`)**: All mutations interacting with your target storage layers must use unified wrappers through `getData.ts` and `setData.ts`. This protects the engine from runtime synchronization corruption.
 3. **Output Standardization (`src/utils/logger.ts`)**: Do not call raw `console.log` arrays directly inside deep logic layers. Use the unified terminal styling framework to keep user-facing telemetry outputs consistent.
 
 ---

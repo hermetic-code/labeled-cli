@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import { SCRIPT_NAME } from '../constants/base';
 import getData from '../utils/getData';
 import section from '../utils/section';
-import setData from '../utils/saveData';
+import setData from '../utils/setData';
 import getIssueLink from '../utils/getIssueLink';
 import { PACKAGE_MANGERS } from '../managers';
 import { TrackingStorage } from '../type';
