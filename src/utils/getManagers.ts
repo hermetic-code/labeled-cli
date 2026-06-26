@@ -8,7 +8,9 @@ export default function getManager() {
         try {
             execSync(`command -v ${manager}`, { stdio: "ignore" });
             return manager;
-        } catch (e) {}
+        } catch {
+            continue;
+        }
     }
 
     logger.error(

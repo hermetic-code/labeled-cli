@@ -7,7 +7,7 @@ import { logger } from "./utils/logger";
 import showHelper from "./utils/showHelper";
 
 // Minimalist Argument Parsing
-const { command, label, packages, flags } = extractor(process.argv);
+const { command, label, packages } = extractor(process.argv);
 
 switch (true) {
     case ["install", "i"].includes(command):

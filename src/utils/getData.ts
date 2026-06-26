@@ -13,7 +13,7 @@ export default function getData(): TrackingStorage {
     try {
         const raw = readFileSync(JSON_PATH, "utf8");
         return JSON.parse(raw || "{}");
-    } catch (e) {
+    } catch {
         logger.warn("JSON tracking index file corrupted. Reinitializing fresh state.");
         return {};
     }

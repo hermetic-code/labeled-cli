@@ -145,7 +145,7 @@ function determinePackageStatus(
                 stdio: "ignore",
             });
             return "ALREADY_INSTALLED"; // No updates pending
-        } catch (code) {
+        } catch {
             // dnf check-update returns exit code 100 if updates are available!
             return "NEEDS_UPDATE";
         }
