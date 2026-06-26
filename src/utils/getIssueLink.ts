@@ -1,16 +1,18 @@
 export default function getIssueLink(
     type: string,
     title: string,
-    body: string,
+    body: string
 ): string {
-    const BOLD = "\x1b[1m";
-    const BLUE = "\x1b[34m";
-    const RESET = "\x1b[0m";
+    const BOLD = '\x1b[1m';
+    const BLUE = '\x1b[34m';
+    const RESET = '\x1b[0m';
 
-    const rawUrl = 
-        encodeURI(`https://github.com/hermetic-code/labeled-cli/issues/new?title=[${type.toUpperCase()}]: `) +
+    const rawUrl =
+        encodeURI(
+            `https://github.com/hermetic-code/labeled-cli/issues/new?title=[${type.toUpperCase()}]: `
+        ) +
         encodeURIComponent(title.toUpperCase()) +
-        "&body=" +
+        '&body=' +
         encodeURIComponent(body);
 
     // Clean, minimalist terminal hyperlink text
