@@ -22,10 +22,26 @@ jobs:
           node-version: 26
           registry-url: https://registry.npmjs.org
 
-      - name: Install Dependencies
+      # Check Linting and Code Formatting Integrity
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Project Dependencies
         run: npm ci
 
-      # 4. Compile the TS source into the optimized executable bundle
+      - name: Verify src/ Code Style Formatting
+        run: npm run format:check
+
+      - name: Run src/ ESLint Verification Analysis
+        run: npm run lint
+
+      # Compile the TS source into the optimized executable bundle
       - name: Build Executables
         run: npm run build
 

@@ -1,10 +1,10 @@
-import { execSync } from "node:child_process";
-import { PackageManagerStrategy } from "../type";
-import { isSudo } from "../utils/isSudo";
+import { execSync } from 'node:child_process';
+import { PackageManagerStrategy } from '../type';
+import { isSudo } from '../utils/isSudo';
 
 const isDnf5 = (): boolean => {
     try {
-        execSync("which dnf5", { stdio: "ignore" });
+        execSync('which dnf5', { stdio: 'ignore' });
         return true;
     } catch {
         return false;

@@ -1,19 +1,12 @@
 interface ParsedArguments {
-    command: string;      // e.g., "install"
-    label: string;        // e.g., "y-fix"
-    packages: string[];   // e.g., ["ncdu", "vhs"]
-    flags: string[];      // e.g., ["--verbose", "--force", "-y"]
+    command: string; // e.g., "install"
+    label: string; // e.g., "y-fix"
+    packages: string[]; // e.g., ["ncdu", "vhs"]
+    flags: string[]; // e.g., ["--verbose", "--force", "-y"]
 }
 
 // 1. Define your global list of supported flags here
-const APPLICABLE_FLAGS = [
-    "--verbose", 
-    "-v", 
-    "--force", 
-    "-f", 
-    "--yes", 
-    "-y"
-];
+const APPLICABLE_FLAGS = ['--verbose', '-v', '--force', '-f', '--yes', '-y'];
 
 /**
  * Parses process.argv array by checking items against allowed global flags
@@ -22,9 +15,9 @@ const APPLICABLE_FLAGS = [
 export default function extractor(argv: string[]): ParsedArguments {
     const args = argv.slice(2);
 
-    const command = args[0] || "";
-    const label = args[1] || "";
-    
+    const command = args[0] || '';
+    const label = args[1] || '';
+
     const packages: string[] = [];
     const flags: string[] = [];
 
@@ -45,6 +38,6 @@ export default function extractor(argv: string[]): ParsedArguments {
         command,
         label,
         packages,
-        flags
+        flags,
     };
 }

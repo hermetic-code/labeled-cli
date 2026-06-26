@@ -46,7 +46,7 @@ labeled/
 
 ### Component Guidelines
 1. **Adding Package Managers (`src/managers/`)**: Avoid creating deep `if-else` branching conditions inside the execution loop. If you are adding support for a new manager (like Snap or Flatpak), implement the common interface declared in `src/managers/index.ts` and drop your mapping strategy into its own class file.
-2. **State Mutation Safety (`src/utils/`)**: All mutations interacting with your target storage layers must use unified wrappers through `getData.ts` and `saveData.ts`. This protects the engine from runtime synchronization corruption.
+2. **State Mutation Safety (`src/utils/`)**: All mutations interacting with your target storage layers must use unified wrappers through `getData.ts` and `setData.ts`. This protects the engine from runtime synchronization corruption.
 3. **Output Standardization (`src/utils/logger.ts`)**: Do not call raw `console.log` arrays directly inside deep logic layers. Use the unified terminal styling framework to keep user-facing telemetry outputs consistent.
 
 ---
@@ -91,13 +91,16 @@ type-issue_id-issue_name-fixed_x_y_z
 ### 2. Scope Containment
 - **One issue per Pull Request.** Multi-issue mega-PRs will be automatically blocked. Keep your changes focused entirely on solving your assigned issue.
 
-### 3. PR Naming Convention
+### 3. Do Linting and Formatting
+Before submitting for PR you must run `npm run lint` and fix the issues then run the `npm run format`.
+
+### 4. PR Naming Convention
 PR titles must follow the exact same bracket prefix rules used for issues (e.g., `[FEATURE]: add flatpak tracking backend`).
 
-### 4. Complete the Verification Checklist
+### 5. Complete the Verification Checklist
 When you open a PR, our template displays a checklist tracking system requirements. You must read through the text and change every single empty checkbox from `[ ]` to `[x]` to confirm your local verification passes. Leaving any box empty triggers an automatic CI failure.
 
-### 5. Link Your Assigned Issue
+### 6. Link Your Assigned Issue
 You must explicitly link your assigned issue inside the PR body description using standard closing keywords (e.g., `close #12`, `fixes #42`, `resolves #11`). 
 
 Our validation engine parses this link to double-check that you are the registered assignee of that issue. If the ownership check does not pass, the workflow blocks execution.

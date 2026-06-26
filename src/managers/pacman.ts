@@ -1,5 +1,5 @@
-import { PackageManagerStrategy } from "../type";
-import { isSudo } from "../utils/isSudo";
+import { PackageManagerStrategy } from '../type';
+import { isSudo } from '../utils/isSudo';
 
 export const pacman: PackageManagerStrategy = {
     install: (pkgs) => `${isSudo}pacman -S --needed --noconfirm --asdeps ${pkgs}`,

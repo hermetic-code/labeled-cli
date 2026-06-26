@@ -1,5 +1,5 @@
-import { PackageManagerStrategy } from "../type";
-import { isSudo } from "../utils/isSudo";
+import { PackageManagerStrategy } from '../type';
+import { isSudo } from '../utils/isSudo';
 
 export const apt: PackageManagerStrategy = {
     install: (pkgs) => `${isSudo}apt install -y ${pkgs}`,
