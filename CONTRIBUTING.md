@@ -91,13 +91,16 @@ type-issue_id-issue_name-fixed_x_y_z
 ### 2. Scope Containment
 - **One issue per Pull Request.** Multi-issue mega-PRs will be automatically blocked. Keep your changes focused entirely on solving your assigned issue.
 
-### 3. PR Naming Convention
+### 3. Do Linting and Formatting
+Before submitting for PR you must run `npm run lint` and fix the issues then run the `npm run format`.
+
+### 4. PR Naming Convention
 PR titles must follow the exact same bracket prefix rules used for issues (e.g., `[FEATURE]: add flatpak tracking backend`).
 
-### 4. Complete the Verification Checklist
+### 5. Complete the Verification Checklist
 When you open a PR, our template displays a checklist tracking system requirements. You must read through the text and change every single empty checkbox from `[ ]` to `[x]` to confirm your local verification passes. Leaving any box empty triggers an automatic CI failure.
 
-### 5. Link Your Assigned Issue
+### 6. Link Your Assigned Issue
 You must explicitly link your assigned issue inside the PR body description using standard closing keywords (e.g., `close #12`, `fixes #42`, `resolves #11`). 
 
 Our validation engine parses this link to double-check that you are the registered assignee of that issue. If the ownership check does not pass, the workflow blocks execution.
