@@ -8,7 +8,11 @@
         "labeled": "dist/labeled"
     },
     "scripts": {
-        "build": "node build.js"
+        "build": "node build.js",
+        "lint": "eslint src/",
+        "lint:fix": "eslint src/ --fix",
+        "format": "prettier --write \"src/**/*.ts\"",
+        "format:check": "prettier --check \"src/**/*.ts\""
     },
     "files": [
         "dist/labeled",
@@ -43,9 +47,16 @@
     },
     "homepage": "https://github.com/hermetic-code/labeled-cli#readme",
     "devDependencies": {
+        "@eslint/js": "^10.0.1",
         "@types/node": "^20.19.43",
         "esbuild": "^0.28.1",
-        "typescript": "^5.0.0"
+        "eslint": "^10.5.0",
+        "eslint-config-prettier": "^10.1.8",
+        "globals": "^17.7.0",
+        "jiti": "^2.7.0",
+        "prettier": "^3.8.4",
+        "typescript": "^5.0.0",
+        "typescript-eslint": "^8.62.0"
     },
     "allowScripts": {
         "esbuild@0.28.1": true
