@@ -14,6 +14,25 @@ jobs:
       contents: write
       issues: read
     steps:
+      # Step 0: Check Linting and Code Formatting Integrity
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Project Dependencies
+        run: npm ci
+
+      - name: Verify src/ Code Style Formatting
+        run: npm run format:check
+
+      - name: Run src/ ESLint Verification Analysis
+        run: npm run lint
+
       # Step 1: Validate Title Formats
       - name: Verify PR Title Format
         uses: actions/github-script@v7
