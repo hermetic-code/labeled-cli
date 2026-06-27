@@ -1,4 +1,4 @@
-name: '🚀 Feature Request'
+name: 'Feature Request'
 description: 'Propose a new utility capability, terminal flag, or engine behavior for labeled'
 title: '[FEATURE]: <Short description of the feature>'
 labels: ['enhancement']

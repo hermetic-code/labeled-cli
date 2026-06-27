@@ -1,4 +1,4 @@
-name: '📝 Documentation Update'
+name: 'Documentation Changes'
 description: 'File a request to improve, correct, or expand the documentation or wiki'
 title: '[DOCS]: <Short description of the documentation task>'
 labels: ['documentation']

@@ -1,4 +1,4 @@
-name: '⚡ Performance Optimization'
+name: 'Performance Optimization'
 description: 'File an issue regarding execution delays, memory consumption, or tracking database bloat'
 title: '[PERF]: <Short description of the performance issue>'
 labels: ['performance']

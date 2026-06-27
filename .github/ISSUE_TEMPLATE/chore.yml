@@ -1,4 +1,4 @@
-name: '🧹 Maintenance & Chore'
+name: 'Chore & Maintenance'
 description: 'File a repository maintenance task, dependency bump, or CI/CD workflow update'
 title: '[CHORE]: <Short description of the task>'
 labels: ['chore']

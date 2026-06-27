@@ -1,4 +1,4 @@
-name: '🐛 Bug Report'
+name: 'Bug Report'
 description: 'File a structured bug report to help optimize the wrapper loop'
 title: '[BUG]: <Short description of the bug>'
 labels: ['bug']
