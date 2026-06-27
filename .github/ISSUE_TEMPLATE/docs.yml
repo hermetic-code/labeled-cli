@@ -1,0 +1,71 @@
+name: '📝 Documentation Update'
+description: 'File a request to improve, correct, or expand the documentation or wiki'
+title: '[DOCS]: <Short description of the documentation task>'
+labels: ['documentation']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              ### Documentation Improvement Request
+              Use this form to flag outdated instructions, broken reference tables, typos, or clear gaps in our architecture guides.
+
+    - type: dropdown
+      id: docs_scope
+      attributes:
+          label: 'Documentation Scope'
+          description: 'Which area of the project documentation needs adjustment?'
+          options:
+              - 'README / Main Landing Page'
+              - 'CONTRIBUTING Guide'
+              - 'SECURITY / License Layout Files'
+              - 'Wiki Architecture Pages'
+              - 'JSDoc / Codebase Inline Annotations'
+              - 'Other Documentation'
+      validations:
+          required: true
+
+    - type: dropdown
+      id: priority_impact
+      attributes:
+          label: 'Impact Assessment'
+          description: 'How severely does this documentation issue affect users or developers?'
+          options:
+              - 'Critical (Broken setup commands, missing core requirements, broken links)'
+              - 'Standard Update (Expanding guides, updating configuration flags)'
+              - 'Typo / Style Fix (Fixing typos, grammar, or markdown spacing)'
+      validations:
+          required: true
+
+    - type: textarea
+      id: problem_description
+      attributes:
+          label: 'Current Deficiency Description'
+          description: 'What is currently missing, misleading, or incorrect in the active documentation?'
+          placeholder: 'e.g., The setup step mentions using Node 18, but the modern ESLint 10 setup depends on flat configuration bindings requiring Node 20+...'
+      validations:
+          required: true
+
+    - type: textarea
+      id: proposed_changes
+      attributes:
+          label: 'Proposed Text / Corrections'
+          description: 'Provide the updated phrasing or a clear layout outline of what should be written instead.'
+          placeholder: "Update Section 2 to state: 'Ensure your host local node execution runtime matches...' "
+      validations:
+          required: true
+
+    - type: checkboxes
+      id: documentation_guardrails
+      attributes:
+          label: 'Documentation Guardrails'
+          options:
+              - label: 'I confirm that I have verified the accuracy of the proposed text changes.'
+                required: true
+              - label: 'I verify this is not an open security exploit report.'
+                required: true
+              - label: 'I have searched the issue tracker and verified this issue does not already exist. (Exception: Automated system logs generated directly by Labeled-CLI running).'
+                required: true
+              - label: 'My issue title strictly follows the format: `[DOCS]: <Short description of the documentation task>`.'
+                required: true
+              - label: 'I understand that I must not start working on this until a maintainer assigns it to me via a comment request.'
+                required: true

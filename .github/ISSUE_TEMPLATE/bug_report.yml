@@ -1,0 +1,74 @@
+name: '🐛 Bug Report'
+description: 'File a structured bug report to help optimize the wrapper loop'
+title: '[BUG]: <Short description of the bug>'
+labels: ['bug']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              ### Thanks for helping optimize labeled!
+              Please fill out this form accurately. Our automated pipeline uses these fields to spin up validation containers.
+
+    - type: input
+      id: os_version
+      attributes:
+          label: 'Linux Distribution & Version'
+          description: 'Provide your specific OS details.'
+          placeholder: 'e.g., Fedora 40, Ubuntu 24.04 LTS, Arch Linux'
+      validations:
+          required: true
+
+    - type: dropdown
+      id: manager_backend
+      attributes:
+          label: 'Active Package Manager'
+          description: 'Which system backend triggered the fault?'
+          options:
+              - 'apt'
+              - 'dnf'
+              - 'pacman'
+              - 'other / multiple'
+      validations:
+          required: true
+
+    - type: input
+      id: cli_version
+      attributes:
+          label: 'Labeled Tool Version'
+          description: "Run 'labeled --version' in your terminal."
+          placeholder: 'e.g., 1.0.0'
+      validations:
+          required: true
+
+    - type: textarea
+      id: reproduction
+      attributes:
+          label: 'Reproduction Commands'
+          description: 'What exact sequence of commands triggers the error?'
+          placeholder: |
+              1. labeled install dev-env curl
+              2. [Disconnect network]
+              3. labeled remove dev-env
+      validations:
+          required: true
+
+    - type: textarea
+      id: logs
+      attributes:
+          label: 'Terminal Error Output'
+          description: 'Paste raw error messages or state stack traces here.'
+          render: bash
+
+    - type: checkboxes
+      id: guardrails
+      attributes:
+          label: 'Repository Guardrails'
+          options:
+              - label: 'I verify this is not an open security exploit report.'
+                required: true
+              - label: 'I have searched the issue tracker and verified this issue does not already exist. (Exception: Automated system logs generated directly by Labeled-CLI running).'
+                required: true
+              - label: 'My issue title strictly follows the format: `[BUG]: <short-description>`.'
+                required: true
+              - label: 'I understand that I must not start working on this until a maintainer assigns it to me via a comment request.'
+                required: true
