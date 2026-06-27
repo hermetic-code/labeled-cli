@@ -4,10 +4,10 @@ on:
   push:
     tags:
       - "v*"
-
   workflow_dispatch:
 
 permissions:
+  # CRITICAL: This is the magic permission that allows tokenless npm publishing
   id-token: write
   contents: write
 
@@ -15,21 +15,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 26
-          registry-url: https://registry.npmjs.org
-
-      # Check Linting and Code Formatting Integrity
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Install Node.js Environment
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 26 # Or whichever LTS you prefer
           cache: "npm"
 
       - name: Install Project Dependencies
@@ -41,7 +33,6 @@ jobs:
       - name: Run src/ ESLint Verification Analysis
         run: npm run lint
 
-      # Compile the TS source into the optimized executable bundle
       - name: Build Executables
         run: npm run build
 
@@ -57,11 +48,11 @@ jobs:
           name: Release ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'Manual Development Build' }}
           draft: false
           prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
-          generate_release_notes: true # Automatically generates a detailed list of pull requests and commits
+          generate_release_notes: true
           body: |
             ### 📦 Distribution Flavors Included:
-            - **`labeled`**: Lightweight plain text shebang script (~4KB). Requires an existing Node.js environment on the host machine.
-            - **`labeled-linux-x64`**: Self-contained production binary (~140MB). Zero dependencies required. Runs natively out of the box.
+            - **`labeled`**: Lightweight plain text shebang script (~4KB). Requires an existing Node.js environment.
+            - **`labeled-linux-x64`**: Self-contained production binary (~140MB). Zero dependencies required.
 
             _Automated deployment pipeline compilation verified using Node.js v26 runtime engine sandbox._
         env:
