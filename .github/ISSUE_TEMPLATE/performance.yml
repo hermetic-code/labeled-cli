@@ -1,0 +1,71 @@
+name: '⚡ Performance Optimization'
+description: 'File an issue regarding execution delays, memory consumption, or tracking database bloat'
+title: '[PERF]: <Short description of the performance issue>'
+labels: ['performance']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              ### Performance Optimization Log
+              Help us keep labeled lightning fast. Use this form to document execution friction, slow sub-process spawning, or excessive state-file disk reads.
+
+    - type: dropdown
+      id: perf_category
+      attributes:
+          label: 'Bottleneck Category'
+          description: 'Where is the primary performance degradation occurring?'
+          options:
+              - 'Storage Data Bloat (tracking.json read/write cycles)'
+              - 'Execution Delay (Native shell package manager spawn loops)'
+              - 'Memory Safety & Resource Overhead'
+              - 'Build & Compilation Pipeline Latency'
+              - 'Other Performance Deficit'
+      validations:
+          required: true
+
+    - type: dropdown
+      id: hardware_profile
+      attributes:
+          label: 'Hardware Environment Profile'
+          description: 'What type of system configuration is running this execution loop?'
+          options:
+              - 'Low-Spec Hardware (Resource-constrained CPU / Limited Memory)'
+              - 'Standard Development Laptop / Desktop Workstation'
+              - 'Remote Server / Cloud CI Runner Container'
+      validations:
+          required: true
+
+    - type: textarea
+      id: measurement_data
+      attributes:
+          label: 'Observed Performance Metrics'
+          description: 'Provide quantitative data detailing the execution delays or resource usage.'
+          placeholder: |
+              - Current Execution Time: e.g., 'labeled list' takes 1.8 seconds to parse the tree.
+              - Expected Execution Time: Should complete instantly (under 150ms) via faster strategy index caching.
+      validations:
+          required: true
+
+    - type: textarea
+      id: profiling_traces
+      attributes:
+          label: 'Profiling Traces / Benchmark Logs'
+          description: 'Paste raw data streams from benchmarks, console time executions, or memory profiles if available.'
+          render: text
+          placeholder: 'e.g., Output logs from execution benchmarking tool loops...'
+
+    - type: checkboxes
+      id: performance_guardrails
+      attributes:
+          label: 'Performance Issue Alignment'
+          options:
+              - label: 'I verify that this issue specifically targets optimization improvements (not a regular bug or feature request).'
+                required: true
+              - label: 'I verify this is not an open security exploit report.'
+                required: true
+              - label: 'I have confirmed no other open tracking issue is actively addressing this specific code branch benchmark.'
+                required: true
+              - label: 'My issue title strictly follows the format: `[PERF]: <Short description of the performance issue>`.'
+                required: true
+              - label: 'I understand that I must not start working on this until a maintainer assigns it to me via a comment request.'
+                required: true

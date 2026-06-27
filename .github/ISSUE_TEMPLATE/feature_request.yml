@@ -1,0 +1,68 @@
+name: '🚀 Feature Request'
+description: 'Propose a new utility capability, terminal flag, or engine behavior for labeled'
+title: '[FEATURE]: <Short description of the feature>'
+labels: ['enhancement']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              ### Propose a New Extension
+              Thank you for suggesting an improvement! Please outline your idea clearly so we can evaluate its architectural alignment and hardware performance impact.
+
+    - type: dropdown
+      id: feature_scope
+      attributes:
+          label: 'Feature Target Scope'
+          description: 'Which architectural layer does this feature target?'
+          options:
+              - 'Core Engine Logic (src/engine.ts)'
+              - 'CLI Argument / Flag Interface (src/index.ts)'
+              - 'Package Manager Integration (src/managers/*)'
+              - 'State & Storage Optimization (src/utils/saveData.ts)'
+              - 'Other System Extension'
+      validations:
+          required: true
+
+    - type: textarea
+      id: user_problem
+      attributes:
+          label: 'Problem Statement / Use Case'
+          description: 'What limitation or friction in your current workflow does this feature solve? Describe clearly.'
+          placeholder: "e.g., Currently, when installing a tool chain that takes a long time, there's no way to pass an interactive timeout flag, causing background manager updates to hang silently on slower connections..."
+      validations:
+          required: true
+
+    - type: textarea
+      id: proposed_implementation
+      attributes:
+          label: 'Proposed Solution & Terminal Behavior'
+          description: 'How should this feature work? Provide examples of the exact CLI commands, syntax variations, or expected tracking data structures.'
+          placeholder: |
+              Introduce a `--timeout <seconds>` flag that maps to execution spawn loops.
+              Example syntax: 
+              labeled install dev-env curl --timeout 30
+      validations:
+          required: true
+
+    - type: textarea
+      id: technical_notes
+      attributes:
+          label: 'Architectural Implementation Ideas'
+          description: 'Optional notes on how this could be coded or which internal strategies are impacted.'
+          placeholder: 'This will require modifying the execution options structure in src/managers/index.ts to safely append custom abort signals...'
+
+    - type: checkboxes
+      id: feature_guardrails
+      attributes:
+          label: 'Feature Proposal Alignment'
+          options:
+              - label: 'I confirm this proposal is a feature addition, not a bug report or structural maintenance task.'
+                required: true
+              - label: 'I verify this is not an open security exploit report.'
+                required: true
+              - label: 'I have verified that no other active issue or open discussion thread is tracking this exact proposal.'
+                required: true
+              - label: 'My issue title strictly follows the format: `[FEATURE]: <Short description of the feature>`.'
+                required: true
+              - label: 'I understand that I must not start working on this until a maintainer assigns it to me via a comment request.'
+                required: true

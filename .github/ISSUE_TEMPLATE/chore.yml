@@ -1,0 +1,69 @@
+name: '🧹 Maintenance & Chore'
+description: 'File a repository maintenance task, dependency bump, or CI/CD workflow update'
+title: '[CHORE]: <Short description of the task>'
+labels: ['chore']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              ### Repository Maintenance Entry
+              Use this form to map out structural refactors, build script adjustments, or automation pipeline updates.
+
+    - type: dropdown
+      id: chore_category
+      attributes:
+          label: 'Chore Category'
+          description: 'Select the primary scope of this maintenance task.'
+          options:
+              - 'CI/CD Pipeline (.github/workflows)'
+              - 'Dependencies (package.json / lockfiles)'
+              - 'Build & Compilation System (build.js / tsconfig)'
+              - 'Repository Automation & Governance Templates'
+              - 'Other Maintenance'
+      validations:
+          required: true
+
+    - type: input
+      id: target_files
+      attributes:
+          label: 'Target Files / Paths'
+          description: 'Which configuration or system files will this change affect?'
+          placeholder: 'e.g., package.json, eslint.config.js, .github/workflows/pr-pipeline.yml'
+      validations:
+          required: true
+
+    - type: textarea
+      id: description
+      attributes:
+          label: 'Task Description'
+          description: 'Clearly state what needs to be updated and why this maintenance is necessary.'
+          placeholder: 'e.g., Upgrade Node.js environment to LTS version 22 across all action runner contexts to capture performance optimizations...'
+      validations:
+          required: true
+
+    - type: textarea
+      id: outcome
+      attributes:
+          label: 'Technical Expected Outcomes'
+          description: 'What are the criteria for this chore to be considered complete?'
+          placeholder: |
+              - Pipeline executes successfully without environment errors.
+              - Dependency locks are deterministically updated.
+      validations:
+          required: true
+
+    - type: checkboxes
+      id: verification
+      attributes:
+          label: 'Maintenance Guardrails'
+          options:
+              - label: 'I verify this is not an open security exploit report.'
+                required: true
+              - label: 'I have verified no other open issue is currently tracking this exact update.'
+                required: true
+              - label: 'My issue title strictly follows the format: `[CHORE]: <Short description of the task>`.'
+                required: true
+              - label: 'I understand that I must not start working on this until a maintainer assigns it to me via a comment request.'
+                required: true
+              - label: 'I confirm this work is strictly structural maintenance (no features, no core bug fixes).'
+                required: true
