@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/banner.png" alt="labeled CLI banner" width="100%">
+  <img src="./assets/labeled-banner.png" alt="labeled CLI banner" width="100%">
 </p>
 
 <p align="center">
