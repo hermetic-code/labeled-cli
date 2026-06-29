@@ -1,6 +1,6 @@
 {
     "name": "labeled-cli",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A cross-distro package tracking wrapper for Linux.",
     "author": "Joyal George K J",
     "license": "SEE LICENSE IN LICENSE",
