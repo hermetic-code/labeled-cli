@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/labeled-banner.png" alt="labeled CLI banner" width="100%">
+  <b>labeled</b> lets you group package installations under a custom label and safely remove them later using your system's native package manager. Instead of manually remembering every package you installed during troubleshooting, testing, or development, you can track them as a temporary session and clean them up in one command.
 </p>
 
 <p align="center">
@@ -10,12 +10,6 @@
   <img src="https://img.shields.io/badge/Pacman-Arch-33AADD?style=for-the-badge&logo=arch-linux&logoColor=white" alt="Pacman Supported" />
   <img src="https://img.shields.io/badge/DNF5-Fedora-51A2DA?style=for-the-badge&logo=fedora&logoColor=white" alt="DNF Supported" />
 </p>
-
-<p align="center">
-  <b><i>labeled</i></b> lets you group package installations under a custom label and safely remove them later using your system's native package manager. Instead of manually remembering every package you installed during troubleshooting, testing, or development, you can track them as a temporary session and clean them up in one command.
-</p>
-
-
 
 ---
 
